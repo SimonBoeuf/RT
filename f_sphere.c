@@ -6,7 +6,7 @@
 /*   By: sboeuf <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/16 19:18:10 by sboeuf            #+#    #+#             */
-/*   Updated: 2014/02/16 19:44:25 by sboeuf           ###   ########.fr       */
+/*   Updated: 2014/03/26 17:55:58 by sboeuf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,35 @@ t_vect		*get_normal_at_sphere(t_sphere *sphere, t_vect *point)
 
 	v = normalize(vect_add(point, negative(sphere->center)));
 	return (v);
+}
+
+t_color		*get_sphere_color(t_sphere *s, t_ray *r, double inter)
+{
+	t_vect	*vn;
+	t_vect	*ve;
+	t_vect	*vp;
+	double	phi;
+	double	theta;
+	double	u;
+	double	v;
+
+	(void)r;
+	if (s->img == NULL)
+		return (s->color);
+	else
+	{
+		vn = new_vector(0, 1, 0);
+		ve = new_vector(0, 0, 1);
+		vp = normalize(vect_add(r->origin, vect_mult(r->direction, inter)));
+		phi = acos(-dot_product(vn, vp));
+		v = phi / (M_PI);
+		theta = acos(dot_product(vp, ve) / sin(phi)) / (2 * M_PI);
+		if (dot_product(crossProduct(vn, ve), vp) > 0)
+			u = theta;
+		else
+			u = 1 - theta;
+	}
+	return (get_uv_color(s->img, u, v));
 }
 
 t_inter		*find_spheres_intersection(t_ray *ray)
@@ -38,7 +67,7 @@ t_inter		*find_spheres_intersection(t_ray *ray)
 			mininter = inter;
 			normal = get_normal_at_sphere(s, vect_add(ray->origin,
 									vect_mult(ray->direction, inter)));
-			c = s->color;
+			c = get_sphere_color(s, ray, inter);
 		}
 		s = s->next;
 	}
@@ -96,23 +125,27 @@ t_sphere	*get_sphere(int fd)
 {
 	int			r;
 	char		*line;
-	t_vect		*center;
-	double		radius;
-	t_color		*color;
+	t_sphere	*s;
 
+	s = new_sphere(NULL, 0, NULL, NULL);
 	while ((r = get_next_line(fd, &line)) > 0 && ft_strcmp(line, "----------"))
 	{
 		if (!ft_strcmp("pos:", line))
-			center = get_vector(fd);
+			s->center = get_vector(fd);
 		if (!ft_strcmp("radius:", line))
 		{
 			r = get_next_line(fd, &line);
-			radius = ft_atodouble(&line);
+			s->radius = ft_atodouble(&line);
 		}
 		if (!ft_strcmp("color:", line))
-			color = get_color(fd);
+			s->color = get_color(fd);
+		if (!ft_strcmp("img:", line))
+		{
+			r = get_next_line(fd, &line);
+			s->img = init_img_from_file(line);
+		}
 	}
 	if (r == -1)
 			exit(-1);
-	return (new_sphere(center, radius, color));
+	return (s);
 }

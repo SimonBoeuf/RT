@@ -6,13 +6,13 @@
 /*   By: sboeuf <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/16 19:21:14 by sboeuf            #+#    #+#             */
-/*   Updated: 2014/02/16 19:49:57 by sboeuf           ###   ########.fr       */
+/*   Updated: 2014/03/26 15:19:48 by sboeuf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/rtv1.h"
 
-t_sphere	*new_sphere(t_vect *center, double radius, t_color *color)
+t_sphere	*new_sphere(t_vect *center, double radius, t_color *color, t_img *i)
 {
 	t_sphere	*s;
 
@@ -20,6 +20,8 @@ t_sphere	*new_sphere(t_vect *center, double radius, t_color *color)
 	s->center = center;
 	s->radius = radius;
 	s->color = color;
+	s->img = i;
+	s->next = NULL;
 	return (s);
 }
 

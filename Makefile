@@ -6,13 +6,13 @@
 #    By: sboeuf <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/02/16 19:40:15 by sboeuf            #+#    #+#              #
-#    Updated: 2014/02/16 20:59:17 by sboeuf           ###   ########.fr        #
+#    Updated: 2014/03/26 10:34:05 by sboeuf           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC			= gcc
 
-NAME		= rtv1
+NAME		= rt
 
 INCLUDE		= ./includes/
 
@@ -59,7 +59,7 @@ DIR_LIBFT	= ./includes/libft
 all:		$(NAME)
 
 %.o:		%.c
-			$(CC) $(CFLAGS) -c $^ -I $(INCLUDE) -L -lft
+			$(CC) $(CFLAGS) -c $^ -I $(INCLUDE)
 
 $(NAME):	$(DIR_LIBFT)/libft.a $(OBJS)
 			$(CC) -o $(NAME) $(OBJS) $(CLFLAGS) $(CFLAGS) $(LDFLAGS)

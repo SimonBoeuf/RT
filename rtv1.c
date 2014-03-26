@@ -6,7 +6,7 @@
 /*   By: sboeuf <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/16 19:21:07 by sboeuf            #+#    #+#             */
-/*   Updated: 2014/02/16 21:07:37 by sboeuf           ###   ########.fr       */
+/*   Updated: 2014/03/26 15:56:38 by sboeuf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ void	display_scene(void)
 
 	window = init_env();
 	window->img = init_img();
-	ft_draw_img();
 	mlx_put_image_to_window(window->mlx, window->win, window->img->img, 0, 0);
+	ft_draw_img();
 	mlx_hook(window->win, 2, (1L << 0), ft_key_hook, window);
 	mlx_expose_hook(window->win, ft_expose_hook, window);
 	mlx_loop(window->mlx);

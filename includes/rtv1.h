@@ -6,7 +6,7 @@
 /*   By: sboeuf <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/01/30 17:38:11 by sboeuf            #+#    #+#             */
-/*   Updated: 2014/02/16 22:24:14 by sboeuf           ###   ########.fr       */
+/*   Updated: 2014/03/26 17:44:02 by sboeuf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <mlx.h>
 # include "libft/includes/libft.h"
 
-# define BUFF_SIZE 32
+# define BUF_SIZE 32
 
 # define KEYECHAP 65307
 
@@ -34,12 +34,24 @@
 # define AMBIENTLIGHT 0.2
 # define ACCURACY 0.00000001
 
+typedef enum
+{
+	NONE,
+	T_SPHERE,
+	T_PLANE,
+	T_CYLINDER,
+	T_LIGHT,
+	T_CONE
+}						t_type;
+
 typedef struct			s_img
 {
 	void				*img;
 	char				*data;
 	int					bbp;
 	int					size_line;
+	int					hi;
+	int					wd;
 	int					endian;
 }						t_img;
 
@@ -81,9 +93,11 @@ typedef struct			s_camera
 
 typedef struct			s_inter
 {
+	t_type				type;
 	t_vect				*normal;
 	double				dist;
 	t_color				*c;
+	t_img				*img;
 }						t_inter;
 
 typedef struct			s_light
@@ -107,6 +121,7 @@ typedef struct			s_sphere
 	double				radius;
 	t_color				*color;
 	struct s_sphere		*next;
+	t_img				*img;
 }						t_sphere;
 
 typedef struct			s_cylinder
@@ -146,6 +161,8 @@ void		display_scene(void);
 ** Img
 */
 t_img		*init_img(void);
+t_img		*init_img_from_file(char *filename);
+t_color		*get_uv_color(t_img *img, double u, double v);
 void		img_del(t_img *img);
 
 /*
@@ -159,6 +176,7 @@ int			ft_expose_hook(void);
 ** Window
 */
 t_win		*init_env(void);
+t_win		*init_xpm(char *filename);
 void		env_del(void);
 
 /*
@@ -181,6 +199,7 @@ void		delete_color(t_color *c);
 t_color		*cpy_color(t_color *c);
 t_color		*get_color(int fd);
 int			get_color_number(t_color *c);
+t_color		*get_color_from_number(int red, int green, int blue);
 
 t_color		*color_scalar(double scalar, t_color *c1);
 t_color		*color_add(t_color *c1, t_color *c2);
@@ -262,7 +281,7 @@ t_plane		*get_plane(int fd);
 /*
 ** Sphere
 */
-t_sphere	*new_sphere(t_vect *center, double radius, t_color *color);
+t_sphere	*new_sphere(t_vect *center, double r, t_color *color, t_img *i);
 void		add_sphere(t_sphere *start, t_sphere *new);
 void		delete_spheres(t_sphere **s);
 

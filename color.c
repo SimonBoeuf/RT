@@ -6,7 +6,7 @@
 /*   By: sboeuf <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/01/30 17:58:47 by sboeuf            #+#    #+#             */
-/*   Updated: 2014/02/16 19:23:21 by sboeuf           ###   ########.fr       */
+/*   Updated: 2014/03/26 17:26:45 by sboeuf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,10 @@ int		get_color_number(t_color *c)
 	rslt = rslt << 8;
 	rslt += c->blue * 255;
 	return (rslt);
+}
+
+t_color	*get_color_from_number(int red, int green, int blue)
+{
+	return (new_color((float)red / 255, (float)green / 255,
+				(float)blue / 255, 0));
 }

@@ -6,7 +6,7 @@
 /*   By: sboeuf <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/16 19:17:47 by sboeuf            #+#    #+#             */
-/*   Updated: 2014/02/16 19:41:00 by sboeuf           ###   ########.fr       */
+/*   Updated: 2014/03/26 15:19:59 by sboeuf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ t_cylinder	*new_cylinder(t_vect *center, double radius, t_color *color)
 	c->center = center;
 	c->radius = radius;
 	c->color = color;
+	c->next = NULL;
 	return (c);
 }
 
