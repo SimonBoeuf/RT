@@ -6,13 +6,12 @@
 /*   By: sboeuf <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/16 19:17:57 by sboeuf            #+#    #+#             */
-/*   Updated: 2014/03/26 19:20:26 by sboeuf           ###   ########.fr       */
+/*   Updated: 2014/03/26 19:41:05 by sboeuf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/rtv1.h"
 
-#include <stdio.h>
 t_color	*reflection(t_color *c, t_ray *r, t_vect *normal)
 {
 	t_ray		*ref;
@@ -25,10 +24,12 @@ t_color	*reflection(t_color *c, t_ray *r, t_vect *normal)
 	if (min->dist > ACCURACY)
 	{
 		ref_inter_ray = get_intersection_ray(ref, min->dist);
-		if ((min->c->spec > 0 && min->c->spec <= 1) || min->c->spec >= 3)
+		if ((min->c->spec > 0 && min->c->spec <= 1))
 			rslt = reflection(min->c, ref_inter_ray, min->normal);
-		else if (min->c->spec >= 2)
+		else if (min->c->spec >= 2 && min->c->spec < 3)
 			rslt = square_plane(c, ref_inter_ray, normal);
+		else if (min->c->spec >= 3)
+			rslt = min->c;
 		else
 			rslt = c;
 		rslt = color_add(c, color_scalar(rslt->spec >= 3 ? rslt->spec - 3 : rslt->spec, rslt));
