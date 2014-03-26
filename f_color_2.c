@@ -6,7 +6,7 @@
 /*   By: sboeuf <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/16 19:17:57 by sboeuf            #+#    #+#             */
-/*   Updated: 2014/03/26 21:46:03 by wtrembla         ###   ########.fr       */
+/*   Updated: 2014/03/26 22:34:34 by wtrembla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,10 @@ t_color	*correct_light(t_color *c, t_ray *r, t_vect *n)
 		dist_l = normalize(vect_add(l->position, negative(r->origin)));
 		a = dot_product(n, dist_l);
 		shadow = new_ray(r->origin, dist_l);
-		if (a > 0 && find_min_inter(shadow)->dist <= ACCURACY)
+		if (a > 0 && find_min_inter(shadow)->dist <= ACCURACY && c->spec > 0)
 		{
 				f = color_add(f, color_scalar(a, color_multiply(c, l->c)));
-				if (c->spec > 0 && c->spec <= 1)
+				if ((c->spec > 0 && c->spec <= 1) || c->spec >= 3)
 				{
 					a = dot_product(get_ref_ray(n, r)->direction, dist_l);
 					f = color_add(f, color_scalar(pow(a, 100) * c->spec, l->c));
@@ -90,6 +90,8 @@ t_color	*correct(t_color *c, t_ray *ray, t_vect *normal, double inter)
 		c = square_plane(c, iray, normal);
 	if (c->spec > 0 && c->spec <= 1)
 		c = reflection(c, iray, normal);
+	if (c->spec < 0)
+		c = color_multiply(c, get_object_color(new_ray(vect_add(ray->origin, vect_mult(ray->direction, inter)), vect_mult(ray->direction, 2))));
 	c = correct_light(c, iray, normal);
 	return (clip(c));
 }
