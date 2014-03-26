@@ -6,12 +6,13 @@
 /*   By: sboeuf <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/16 19:17:57 by sboeuf            #+#    #+#             */
-/*   Updated: 2014/03/26 10:33:34 by sboeuf           ###   ########.fr       */
+/*   Updated: 2014/03/26 19:20:26 by sboeuf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/rtv1.h"
 
+#include <stdio.h>
 t_color	*reflection(t_color *c, t_ray *r, t_vect *normal)
 {
 	t_ray		*ref;
@@ -24,13 +25,13 @@ t_color	*reflection(t_color *c, t_ray *r, t_vect *normal)
 	if (min->dist > ACCURACY)
 	{
 		ref_inter_ray = get_intersection_ray(ref, min->dist);
-		if (min->c->spec > 0 && min->c->spec <= 1)
+		if ((min->c->spec > 0 && min->c->spec <= 1) || min->c->spec >= 3)
 			rslt = reflection(min->c, ref_inter_ray, min->normal);
 		else if (min->c->spec >= 2)
 			rslt = square_plane(c, ref_inter_ray, normal);
 		else
 			rslt = c;
-		rslt = color_add(c, color_scalar(rslt->spec, rslt));
+		rslt = color_add(c, color_scalar(rslt->spec >= 3 ? rslt->spec - 3 : rslt->spec, rslt));
 	}
 	else
 		rslt = c;
@@ -84,7 +85,7 @@ t_color	*correct(t_color *c, t_ray *ray, t_vect *normal, double inter)
 	t_ray	*iray;
 
 	iray = get_intersection_ray(ray, inter);
-	if (c->spec >= 2)
+	if (c->spec >= 2 && c->spec < 3)
 		c = square_plane(c, iray, normal);
 	if (c->spec > 0 && c->spec <= 1)
 		c = reflection(c, iray, normal);

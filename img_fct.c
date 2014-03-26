@@ -6,7 +6,7 @@
 /*   By: sboeuf <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/16 19:18:58 by sboeuf            #+#    #+#             */
-/*   Updated: 2014/03/26 17:55:19 by sboeuf           ###   ########.fr       */
+/*   Updated: 2014/03/26 18:03:21 by sboeuf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,9 @@ t_color			*get_uv_color(t_img *img, double u, double v)
 	unsigned char	green;
 	unsigned char	blue;
 
-	red = img->data[(img->hi - (int)(v * img->hi)) *img->size_line + (int)(u * img->wd) * 4 + 2];
-	green = img->data[(img->hi - (int)(v * img->hi)) *img->size_line + (int)(u * img->wd) * 4 + 1];
-	blue = img->data[(img->hi - (int)(v * img->hi)) *img->size_line + (int)(u * img->wd) * 4];
+	red = img->data[(img->hi - (int)(v * img->hi)) *img->size_line + (img->wd - (int)(u * img->wd)) * 4 + 2];
+	green = img->data[(img->hi - (int)(v * img->hi)) *img->size_line + (img->wd - (int)(u * img->wd)) * 4 + 1];
+	blue = img->data[(img->hi - (int)(v * img->hi)) *img->size_line + (img->wd - (int)(u * img->wd)) * 4];
 	return (get_color_from_number(red, green, blue));
 }
 
