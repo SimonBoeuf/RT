@@ -6,20 +6,23 @@
 /*   By: sboeuf <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/16 19:17:47 by sboeuf            #+#    #+#             */
-/*   Updated: 2014/02/16 21:02:25 by sboeuf           ###   ########.fr       */
+/*   Updated: 2014/03/26 22:19:39 by wtrembla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/rtv1.h"
 
-t_cone		*new_cone(t_vect *center, double alpha, t_color *color)
+t_cone		*new_cone(t_vect *center, double alpha, t_color *col, t_vect *axis)
 {
 	t_cone	*c;
 
 	c = (t_cone*)malloc(sizeof(t_cone));
 	c->center = center;
 	c->alpha = alpha;
-	c->color = color;
+	c->axis = axis;
+	c->color = col;
+	c->cos2 = pow(cos(alpha), 2);
+	c->sin2 = pow(sin(alpha), 2);
 	return (c);
 }
 
@@ -39,6 +42,7 @@ void		delete_cones(t_cone **start)
 		tmp = (*start)->next;
 		delete_vect((*start)->center);
 		delete_color((*start)->color);
+		delete_vect((*start)->axis);
 		(*start)->next = NULL;
 		free(*start);
 		*start = tmp;

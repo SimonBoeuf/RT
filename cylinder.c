@@ -6,20 +6,21 @@
 /*   By: sboeuf <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/16 19:17:47 by sboeuf            #+#    #+#             */
-/*   Updated: 2014/03/26 15:19:59 by sboeuf           ###   ########.fr       */
+/*   Updated: 2014/03/26 21:14:19 by wtrembla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/rtv1.h"
 
-t_cylinder	*new_cylinder(t_vect *center, double radius, t_color *color)
+t_cylinder	*new_cylinder(t_vect *pos, double r, t_color *col, t_vect *axis)
 {
 	t_cylinder	*c;
 
 	c = (t_cylinder*)malloc(sizeof(t_cylinder));
-	c->center = center;
-	c->radius = radius;
-	c->color = color;
+	c->center = pos;
+	c->radius = r;
+	c->axis = axis;
+	c->color = col;
 	c->next = NULL;
 	return (c);
 }
@@ -40,6 +41,7 @@ void		delete_cylinders(t_cylinder **start)
 		tmp = (*start)->next;
 		delete_vect((*start)->center);
 		delete_color((*start)->color);
+		delete_vect((*start)->axis);
 		(*start)->next = NULL;
 		free(*start);
 		*start = tmp;

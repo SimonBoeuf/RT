@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   f_cylinder.c                                       :+:      :+:    :+:   */
+/*   f_cylinder1.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sboeuf <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/16 19:18:00 by sboeuf            #+#    #+#             */
-/*   Updated: 2014/03/26 16:33:36 by sboeuf           ###   ########.fr       */
+/*   Updated: 2014/03/26 21:44:13 by wtrembla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,15 @@
 t_vect		*get_normal_at_cylinder(t_cylinder *c, t_vect *point)
 {
 	t_vect	*v;
+	t_vect	*tmp1;
+	t_vect	*tmp2;
 
-	v = normalize(vect_add(new_vector(point->x, 0, point->z),
-				negative(new_vector(c->center->x, 0, c->center->z))));
+	tmp1 = vect_sub(c->center, point);
+	tmp2 = vect_project(tmp1, c->axis);
+	v = vect_sub(tmp2, tmp1);
+	v = normalize(v);
+	delete_vect(tmp1);
+	delete_vect(tmp2);
 	return (v);
 }
 
@@ -48,28 +54,21 @@ t_inter		*find_cylinders_intersection(t_ray *ray)
 
 double		find_cylinder_intersection(t_cylinder *cy, t_ray *r)
 {
-	double	a;
-	double	b;
-	double	c;
-	double	d;
-	double	rslt;
+	t_vect		*abc;
+	double		d;
+	double		rslt;
 
-	a = pow(r->direction->x, 2) +
-		pow(r->direction->z, 2);
-	b = (2 * (r->direction->x * (r->origin->x - cy->center->x))) +
-		(2 * (r->direction->z * (r->origin->z - cy->center->z)));
-	c = pow(r->origin->x - cy->center->x, 2) +
-		pow(r->origin->z - cy->center->z, 2) -
-		cy->radius * cy->radius;
-	d = b * b - 4 * a * c;
+	abc = coeff_cylinder(cy, r);
+	d = pow(abc->y, 2) - abc->x * abc->z;
 	if (d > 0)
 	{
-		rslt = ((-b - sqrt(d)) / (2 * a)) - 0.000001 > 0 ?
-			(-b - sqrt(d)) / (2 * a) - 0.000001 :
-			(-b + sqrt(d)) / (2 * a) - 0.000001;
+		rslt = ((-abc->y - sqrt(d)) / abc->x) - 0.000001 > 0 ?
+			(-abc->y - sqrt(d)) / abc->x - 0.000001 :
+			(-abc->y + sqrt(d)) / abc->x - 0.000001;
 	}
 	else
 		rslt = -1;
+	delete_vect(abc);
 	return (rslt);
 }
 
@@ -100,6 +99,7 @@ t_cylinder	*get_cylinder(int fd)
 	int			r;
 	char		*line;
 	t_vect		*center;
+	t_vect		*axis;
 	double		radius;
 	t_color		*color;
 
@@ -114,8 +114,13 @@ t_cylinder	*get_cylinder(int fd)
 		}
 		if (!ft_strcmp("color:", line))
 			color = get_color(fd);
+		if (!ft_strcmp("axis:", line))
+		{
+			axis = get_vector(fd);
+			axis = normalize(axis);
+		}
 	}
 	if (r == -1)
 		exit(-1);
-	return (new_cylinder(center, radius, color));
+		return (new_cylinder(center, radius, color, axis));
 }

@@ -6,7 +6,7 @@
 /*   By: sboeuf <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/01/30 17:38:11 by sboeuf            #+#    #+#             */
-/*   Updated: 2014/03/26 19:22:45 by sboeuf           ###   ########.fr       */
+/*   Updated: 2014/03/26 22:21:24 by wtrembla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,7 @@ typedef struct			s_cylinder
 	t_vect				*center;
 	double				radius;
 	t_color				*color;
+	t_vect				*axis;
 	struct s_cylinder	*next;
 }						t_cylinder;
 
@@ -136,7 +137,10 @@ typedef struct			s_cone
 {
 	t_vect				*center;
 	double				alpha;
+	t_vect				*axis;
 	t_color				*color;
+	double				cos2;
+	double				sin2;
 	struct s_cone		*next;
 }						t_cone;
 
@@ -226,6 +230,8 @@ t_vect		*negative(t_vect *v1);
 t_vect		*crossProduct(t_vect *v1, t_vect *v2);
 t_vect		*vect_add(t_vect *v1, t_vect *v2);
 t_vect		*vect_mult(t_vect *v1, double scalar);
+t_vect		*vect_sub(t_vect *v1, t_vect *v2);
+t_vect		*vect_project(t_vect *v1, t_vect *v2);
 
 double		dot_product(t_vect *v1, t_vect *v2);
 double		magnitude(t_vect *v);
@@ -294,10 +300,11 @@ t_sphere	*get_sphere(int fd);
 /*
 ** Cylinder
 */
-t_cylinder	*new_cylinder(t_vect *center, double radius, t_color *color);
+t_cylinder	*new_cylinder(t_vect *pos, double r, t_color *col, t_vect *axis);
 void		add_cylinder(t_cylinder *start, t_cylinder *new);
 void		delete_cylinders(t_cylinder **s);
 
+t_vect		*coeff_cylinder(t_cylinder *cylinder, t_ray *ray);
 t_inter		*find_cylinders_intersection(t_ray *r);
 double		find_cylinder_intersection(t_cylinder *c, t_ray *r);
 t_vect		*get_normal_at_cylinder(t_cylinder *c, t_vect *point);
@@ -307,11 +314,12 @@ t_cylinder	*get_cylinder(int fd);
 /*
 ** Cone
 */
-t_cone		*new_cone(t_vect *center, double alpha, t_color *color);
+t_cone		*new_cone(t_vect *center, double alpha, t_color *col, t_vect *axis);
 void		add_cone(t_cone *start, t_cone *new);
 void		delete_cones(t_cone **s);
 
-t_inter		*find_cones_intersection(t_ray *r);
+t_vect		*coeff_cone(t_cone *cone, t_ray *ray);
+t_inter		*find_cones_intersection(t_ray *ray);
 double		find_cone_intersection(t_cone *c, t_ray *r);
 t_vect		*get_normal_at_cone(t_cone *c, t_vect *point);
 t_cone		*get_cones(int fd);

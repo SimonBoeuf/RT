@@ -6,7 +6,7 @@
 #    By: sboeuf <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/02/16 19:40:15 by sboeuf            #+#    #+#              #
-#    Updated: 2014/03/26 10:34:05 by sboeuf           ###   ########.fr        #
+#    Updated: 2014/03/26 22:17:32 by wtrembla         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,8 @@ SRCS		=	main.c				\
 				light.c				\
 				plane.c				\
 				sphere.c			\
-				v_vect.c			\
+				v_vect1.c			\
+				v_vect2.c			\
 				scene.c				\
 				ft_get_next_line.c	\
 				ft_atodouble.c		\
@@ -41,9 +42,11 @@ SRCS		=	main.c				\
 				draw.c				\
 				hook_fct.c			\
 				cylinder.c			\
-				f_cylinder.c		\
+				f_cylinder1.c		\
+				f_cylinder2.c		\
 				cone.c				\
-				f_cone.c			\
+				f_cone1.c			\
+				f_cone2.c			\
 				intersection.c		\
 
 OBJS		= $(SRCS:.c=.o)
