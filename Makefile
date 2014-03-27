@@ -48,6 +48,8 @@ SRCS		=	main.c				\
 				f_cone1.c			\
 				f_cone2.c			\
 				intersection.c		\
+				check1.c			\
+				check2.c			\
 
 OBJS		= $(SRCS:.c=.o)
 

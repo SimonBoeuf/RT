@@ -332,4 +332,15 @@ t_scene		*new_scene(void);
 t_scene		*get_scene(void);
 void		delete_scene(t_scene *s);
 
+/*
+**
+*/
+void		check_scene(void);
+void		check_camera(void);
+void		check_lights(void);
+void		check_planes(void);
+void		check_spheres(void);
+void		check_cones(void);
+void		check_cylinders(void);
+
 #endif

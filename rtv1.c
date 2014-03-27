@@ -28,6 +28,7 @@ void	display_scene(void)
 void	rtv1(char *scene_file)
 {
 	init_scene(scene_file);
+	check_scene();
 	display_scene();
 }
 
@@ -58,4 +59,14 @@ void	init_scene(char *scene_file)
 	}
 	if (ret == -1)
 			exit(-1);
+}
+
+void	check_scene(void)
+{
+	check_camera();
+	check_lights();
+	check_cylinders();
+	check_cones();
+	check_spheres();
+	check_planes();
 }

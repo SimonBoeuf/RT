@@ -98,29 +98,27 @@ t_cylinder	*get_cylinder(int fd)
 {
 	int			r;
 	char		*line;
-	t_vect		*center;
-	t_vect		*axis;
-	double		radius;
-	t_color		*color;
+	t_cylinder	*c;
 
+	c = new_cylinder(NULL, 0, NULL, NULL);
 	while ((r = get_next_line(fd, &line)) > 0 && ft_strcmp(line, "----------"))
 	{
 		if (!ft_strcmp("pos:", line))
-			center = get_vector(fd);
+			c->center = get_vector(fd);
 		if (!ft_strcmp("radius:", line))
 		{
 			r = get_next_line(fd, &line);
-			radius = ft_atodouble(&line);
+			c->radius = ft_atodouble(&line);
 		}
 		if (!ft_strcmp("color:", line))
-			color = get_color(fd);
+			c->color = get_color(fd);
 		if (!ft_strcmp("axis:", line))
 		{
-			axis = get_vector(fd);
-			axis = normalize(axis);
+			c->axis = get_vector(fd);
+			c->axis = normalize(c->axis);
 		}
 	}
 	if (r == -1)
 		exit(-1);
-		return (new_cylinder(center, radius, color, axis));
+		return (c);
 }
