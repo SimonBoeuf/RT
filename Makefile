@@ -6,7 +6,7 @@
 #    By: sboeuf <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/02/16 19:40:15 by sboeuf            #+#    #+#              #
-#    Updated: 2014/03/26 22:17:32 by wtrembla         ###   ########.fr        #
+#    Updated: 2014/03/27 19:08:33 by sboeuf           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ SRCS		=	main.c				\
 				color.c				\
 				f_color.c			\
 				f_color_2.c			\
+				f_color_3.c			\
 				light.c				\
 				plane.c				\
 				sphere.c			\
@@ -35,6 +36,7 @@ SRCS		=	main.c				\
 				ft_get_next_line.c	\
 				ft_atodouble.c		\
 				f_sphere.c			\
+				f_sphere_2.c			\
 				f_plane.c			\
 				f_light.c			\
 				window.c			\

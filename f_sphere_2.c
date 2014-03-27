@@ -1,60 +1,64 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   f_plane.c                                          :+:      :+:    :+:   */
+/*   f_sphere_2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sboeuf <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/02/16 19:18:05 by sboeuf            #+#    #+#             */
-/*   Updated: 2014/03/27 19:29:41 by sboeuf           ###   ########.fr       */
+/*   Created: 2014/03/27 19:08:02 by sboeuf            #+#    #+#             */
+/*   Updated: 2014/03/27 19:29:55 by sboeuf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/rtv1.h"
 
-t_plane	*get_planes(int fd)
+t_sphere	*get_spheres(int fd)
 {
 	int			r;
 	char		*line;
-	t_plane		*p;
+	t_sphere	*s;
 
-	p = NULL;
+	s = NULL;
 	while ((r = get_next_line(fd, &line)) > 0 && ft_strcmp(line, "----------"))
 	{
 		if (!ft_strcmp("new:", line))
 		{
-			if (p == NULL)
-				p = get_plane(fd);
+			if (s == NULL)
+				s = get_sphere(fd);
 			else
-				add_plane(p, get_plane(fd));
+				add_sphere(s, get_sphere(fd));
 		}
 	}
 	if (r == -1)
 		exit(-1);
-	return (p);
+	return (s);
 }
 
-t_plane	*get_plane(int fd)
+t_sphere	*get_sphere(int fd)
 {
 	int			r;
 	char		*line;
-	t_vect		*normal;
-	double		distance;
-	t_color		*color;
+	t_sphere	*s;
 
+	s = new_sphere(NULL, 0, NULL, NULL);
 	while ((r = get_next_line(fd, &line)) > 0 && ft_strcmp(line, "----------"))
 	{
 		if (!ft_strcmp("pos:", line))
-			normal = get_vector(fd);
-		if (!ft_strcmp("dist:", line))
+			s->center = get_vector(fd);
+		if (!ft_strcmp("radius:", line))
 		{
 			r = get_next_line(fd, &line);
-			distance = ft_atodouble(&line);
+			s->radius = ft_atodouble(&line);
 		}
 		if (!ft_strcmp("color:", line))
-			color = get_color(fd);
+			s->color = get_color(fd);
+		if (!ft_strcmp("img:", line))
+		{
+			r = get_next_line(fd, &line);
+			s->img = init_img_from_file(line);
+		}
 	}
 	if (r == -1)
 		exit(-1);
-	return (new_plane(normal, distance, color));
+	return (s);
 }

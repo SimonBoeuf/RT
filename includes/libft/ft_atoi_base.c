@@ -3,16 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi_base.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sboeuf <sboeuf@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sboeuf <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2013/11/26 11:07:37 by sboeuf           #+#    #+#             */
-/*   Updated: 2014/02/16 19:46:25 by sboeuf           ###   ########.fr       */
+/*   Created: 2014/03/27 19:10:01 by sboeuf            #+#    #+#             */
+/*   Updated: 2014/03/27 19:35:09 by sboeuf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	ft_inbase(char c, int base);
+static int	ft_inbase(char c, int base)
+{
+	if (base <= 10)
+		return (c >= '0' && c <= '9');
+	return ((c >= '0' && c <= '9') || (c >= 'A' && c <= ('A' + base - 10)));
+}
 
 int			ft_atoi_base(char *str, int base)
 {
@@ -37,11 +42,4 @@ int			ft_atoi_base(char *str, int base)
 		str++;
 	}
 	return (value * sign);
-}
-
-static int	ft_inbase(char c, int base)
-{
-	if (base <= 10)
-		return (c >= '0' && c <= '9');
-	return ((c >= '0' && c <= '9') || (c >= 'A' && c <= ('A' + base - 10)));
 }

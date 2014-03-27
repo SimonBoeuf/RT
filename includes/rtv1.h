@@ -6,7 +6,7 @@
 /*   By: sboeuf <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/01/30 17:38:11 by sboeuf            #+#    #+#             */
-/*   Updated: 2014/03/27 18:23:13 by wtrembla         ###   ########.fr       */
+/*   Updated: 2014/03/27 19:33:45 by sboeuf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,16 +33,6 @@
 # define ASPR ((double)WD / (double)HI)
 # define AMBIENTLIGHT 0.2
 # define ACCURACY 0.00000001
-
-typedef enum
-{
-	NONE,
-	T_SPHERE,
-	T_PLANE,
-	T_CYLINDER,
-	T_LIGHT,
-	T_CONE
-}						t_type;
 
 typedef struct			s_img
 {
@@ -93,7 +83,6 @@ typedef struct			s_camera
 
 typedef struct			s_inter
 {
-	t_type				type;
 	t_vect				*normal;
 	double				dist;
 	t_color				*c;
@@ -160,194 +149,199 @@ typedef struct			s_scene
 /*
 ** Core
 */
-void		rtv1(char *file);
-void		init_scene(char *file);
-void		display_scene(void);
+void					rtv1(char *file);
+void					init_scene(char *file);
+void					display_scene(void);
 
 /*
 ** Img
 */
-t_img		*init_img(void);
-t_img		*init_img_from_file(char *filename);
-t_color		*get_uv_color(t_img *img, double u, double v);
-void		img_del(t_img *img);
+t_img					*init_img(void);
+t_img					*init_img_from_file(char *filename);
+t_color					*get_uv_color(t_img *img, double u, double v);
+void					img_del(t_img *img);
 
 /*
 ** Hooks
 */
-void		ft_exit(void);
-int			ft_key_hook(int keycode);
-int			ft_expose_hook(void);
+void					ft_exit(void);
+int						ft_key_hook(int keycode);
+int						ft_expose_hook(void);
 
 /*
 ** Window
 */
-t_win		*init_env(void);
-t_win		*init_xpm(char *filename);
-void		env_del(void);
+t_win					*init_env(void);
+t_win					*init_xpm(char *filename);
+void					env_del(void);
 
 /*
 ** Draw
 */
-void		mlx_put_pixel_to_image(int x, int y, int color);
-void		ft_draw_img(void);
+void					mlx_put_pixel_to_image(int x, int y, int color);
+void					ft_draw_img(void);
 
 /*
 ** GetNextLine & misc
 */
-int			get_next_line(int const fd, char **line);
-double		ft_atodouble(char **s);
+int						get_next_line(int const fd, char **line);
+double					ft_atodouble(char **s);
 
 /*
 ** Color
 */
-t_color		*new_color(double red, double green, double blue, double special);
-void		delete_color(t_color *c);
-t_color		*cpy_color(t_color *c);
-t_color		*get_color(int fd);
-int			get_color_number(t_color *c);
-t_color		*get_color_from_number(int red, int green, int blue);
+t_color					*new_color(double red, double green,
+							double blue, double special);
+void					delete_color(t_color *c);
+t_color					*cpy_color(t_color *c);
+t_color					*get_color(int fd);
+int						get_color_number(t_color *c);
+t_color					*get_color_from_number(int red, int green, int blue);
 
-t_color		*color_scalar(double scalar, t_color *c1);
-t_color		*color_add(t_color *c1, t_color *c2);
-t_color		*color_multiply(t_color *c1, t_color *c2);
-t_color		*color_average(t_color *c1, t_color *c2);
-t_color		*clip(t_color *c1);
+t_color					*color_scalar(double scalar, t_color *c1);
+t_color					*color_add(t_color *c1, t_color *c2);
+t_color					*color_multiply(t_color *c1, t_color *c2);
+t_color					*color_average(t_color *c1, t_color *c2);
+t_color					*clip(t_color *c1);
 
-t_color		*reflection(t_color *c, t_ray *r, t_vect *normal);
-t_color		*square_plane(t_color *c, t_ray *iray, t_vect *n);
-t_color		*correct_light(t_color *c, t_ray *r, t_vect *n);
-t_color		*correct(t_color *c, t_ray *ray, t_vect *normal, double inter);
-t_color		*get_object_color(t_ray *ray);
+t_color					*reflection(t_color *c, t_ray *r, t_vect *normal);
+t_color					*square_plane(t_color *c, t_ray *iray, t_vect *n);
+t_color					*correct_light(t_color *c, t_ray *r, t_vect *n);
+t_color					*correct(t_color *c, t_ray *ray, t_vect *normal,
+							double inter);
+t_color					*get_object_color(t_ray *ray);
 
 /*
 ** Vector
 */
-t_vect		*new_vector(double x, double y, double z);
-void		delete_vect(t_vect *v);
-t_vect		*get_vector(int fd);
-t_vect		*cpy_vect(t_vect *v);
+t_vect					*new_vector(double x, double y, double z);
+void					delete_vect(t_vect *v);
+t_vect					*get_vector(int fd);
+t_vect					*cpy_vect(t_vect *v);
 
-t_vect		*normalize(t_vect *v1);
-t_vect		*negative(t_vect *v1);
-t_vect		*crossProduct(t_vect *v1, t_vect *v2);
-t_vect		*vect_add(t_vect *v1, t_vect *v2);
-t_vect		*vect_mult(t_vect *v1, double scalar);
-t_vect		*vect_sub(t_vect *v1, t_vect *v2);
-t_vect		*vect_project(t_vect *v1, t_vect *v2);
+t_vect					*normalize(t_vect *v1);
+t_vect					*negative(t_vect *v1);
+t_vect					*cross_product(t_vect *v1, t_vect *v2);
+t_vect					*vect_add(t_vect *v1, t_vect *v2);
+t_vect					*vect_mult(t_vect *v1, double scalar);
+t_vect					*vect_sub(t_vect *v1, t_vect *v2);
+t_vect					*vect_project(t_vect *v1, t_vect *v2);
 
-double		dot_product(t_vect *v1, t_vect *v2);
-double		magnitude(t_vect *v);
+double					dot_product(t_vect *v1, t_vect *v2);
+double					magnitude(t_vect *v);
 
 /*
 ** Camera
 */
-t_camera	*new_camera(t_vect *p, t_vect *di, t_vect *r, t_vect *dwn);
-void		delete_camera(t_camera *c);
-t_camera	*get_camera(int fd);
+t_camera				*new_camera(t_vect *p, t_vect *di, t_vect *r,
+							t_vect *dwn);
+void					delete_camera(t_camera *c);
+t_camera				*get_camera(int fd);
 
 /*
 ** Ray
 */
-t_ray		*new_ray(t_vect *o, t_vect *d);
-t_ray		*cpy_ray(t_ray *r);
-void		delete_ray(t_ray *r);
+t_ray					*new_ray(t_vect *o, t_vect *d);
+t_ray					*cpy_ray(t_ray *r);
+void					delete_ray(t_ray *r);
 
-t_ray		*get_intersection_ray(t_ray *r, double inter);
-t_ray		*get_ref_ray(t_vect *n, t_ray *r);
-t_ray		*get_ray(t_camera *c, double x, double y);
+t_ray					*get_intersection_ray(t_ray *r, double inter);
+t_ray					*get_ref_ray(t_vect *n, t_ray *r);
+t_ray					*get_ray(t_camera *c, double x, double y);
 
 /*
 ** Light
 */
-t_light		*new_light(t_vect *p, t_color *c);
-void		add_light(t_light *start, t_light *new);
-void		delete_lights(t_light **l);
+t_light					*new_light(t_vect *p, t_color *c);
+void					add_light(t_light *start, t_light *new);
+void					delete_lights(t_light **l);
 
-t_light		*get_spots(int fd);
-t_light		*get_spot(int fd);
+t_light					*get_spots(int fd);
+t_light					*get_spot(int fd);
 
 /*
 ** Intersection
 */
 
-t_inter		*new_inter(t_vect *n, double dist, t_color *c);
-t_inter		*min_inter(t_inter *i, t_inter *i2);
-t_inter		*find_min_inter(t_ray *r);
+t_inter					*new_inter(t_vect *n, double dist, t_color *c);
+t_inter					*min_inter(t_inter *i, t_inter *i2);
+t_inter					*find_min_inter(t_ray *r);
 
 /*
 ** Plane
 */
-t_plane		*new_plane(t_vect *normal, double distance, t_color *c);
-void		add_plane(t_plane *start, t_plane *new);
-t_inter		*find_planes_intersection(t_ray *ray);
-double		find_plane_intersection(t_plane *p, t_ray *ray);
-void		delete_planes(t_plane **p);
+t_plane					*new_plane(t_vect *normal, double distance, t_color *c);
+void					add_plane(t_plane *start, t_plane *new);
+t_inter					*find_planes_intersection(t_ray *ray);
+double					find_plane_intersection(t_plane *p, t_ray *ray);
+void					delete_planes(t_plane **p);
 
-t_plane		*get_planes(int fd);
-t_plane		*get_plane(int fd);
+t_plane					*get_planes(int fd);
+t_plane					*get_plane(int fd);
 
 /*
 ** Sphere
 */
-t_sphere	*new_sphere(t_vect *center, double r, t_color *color, t_img *i);
-void		add_sphere(t_sphere *start, t_sphere *new);
-void		delete_spheres(t_sphere **s);
+t_sphere				*new_sphere(t_vect *center, double r, t_color *color,
+							t_img *i);
+void					add_sphere(t_sphere *start, t_sphere *new);
+void					delete_spheres(t_sphere **s);
 
-t_inter		*find_spheres_intersection(t_ray *r);
-double		find_sphere_intersection(t_sphere *s, t_ray *r);
-t_vect		*get_normal_at_sphere(t_sphere *sphere, t_vect *point);
-t_sphere	*get_spheres(int fd);
-t_sphere	*get_sphere(int fd);
+t_inter					*find_spheres_intersection(t_ray *r);
+double					find_sphere_intersection(t_sphere *s, t_ray *r);
+t_vect					*get_normal_at_sphere(t_sphere *sphere, t_vect *point);
+t_sphere				*get_spheres(int fd);
+t_sphere				*get_sphere(int fd);
 
 /*
 ** Cylinder
 */
-t_cylinder	*new_cylinder(t_vect *pos, double r, t_color *col, t_vect *axis);
-void		add_cylinder(t_cylinder *start, t_cylinder *new);
-void		delete_cylinders(t_cylinder **s);
+t_cylinder				*new_cylinder(t_vect *pos, double r, t_color *col,
+							t_vect *axis);
+void					add_cylinder(t_cylinder *start, t_cylinder *new);
+void					delete_cylinders(t_cylinder **s);
 
-t_vect		*coeff_cylinder(t_cylinder *cylinder, t_ray *ray);
-int			check_finite_cyl(t_cylinder *cy, t_vect *point);
-t_inter		*find_cylinders_intersection(t_ray *r);
-double		find_cylinder_intersection(t_cylinder *c, t_ray *r);
-t_vect		*get_normal_at_cylinder(t_cylinder *c, t_vect *point);
-t_cylinder	*get_cylinders(int fd);
-t_cylinder	*get_cylinder(int fd);
+t_vect					*coeff_cylinder(t_cylinder *cylinder, t_ray *ray);
+int						check_finite_cyl(t_cylinder *cy, t_vect *point);
+t_inter					*find_cylinders_intersection(t_ray *r);
+double					find_cylinder_intersection(t_cylinder *c, t_ray *r);
+t_vect					*get_normal_at_cylinder(t_cylinder *c, t_vect *point);
+t_cylinder				*get_cylinders(int fd);
+t_cylinder				*get_cylinder(int fd);
 
 /*
 ** Cone
 */
-t_cone		*new_cone(t_vect *center, double alpha, t_color *col, t_vect *axis);
-void		add_cone(t_cone *start, t_cone *new);
-void		delete_cones(t_cone **s);
-void		calc_sin2(t_cone *c);
-void		calc_cos2(t_cone *c);
+t_cone					*new_cone(t_vect *center, double alpha, t_color *col,
+							t_vect *axis);
+void					add_cone(t_cone *start, t_cone *new);
+void					delete_cones(t_cone **s);
+void					calc_trigo(t_cone *c);
 
-t_vect		*coeff_cone(t_cone *cone, t_ray *ray);
-int			check_finite_co(t_cone *co, t_vect *point);
-t_inter		*find_cones_intersection(t_ray *ray);
-double		find_cone_intersection(t_cone *c, t_ray *r);
-t_vect		*get_normal_at_cone(t_cone *c, t_vect *point);
-t_cone		*get_cones(int fd);
-t_cone		*get_cone(int fd);
+t_vect					*coeff_cone(t_cone *cone, t_ray *ray);
+int						check_finite_co(t_cone *co, t_vect *point);
+t_inter					*find_cones_intersection(t_ray *ray);
+double					find_cone_intersection(t_cone *c, t_ray *r);
+t_vect					*get_normal_at_cone(t_cone *c, t_vect *point);
+t_cone					*get_cones(int fd);
+t_cone					*get_cone(int fd);
 
 /*
 ** Scene
 */
-t_scene		*new_scene(void);
-t_scene		*get_scene(void);
-void		delete_scene(t_scene *s);
+t_scene					*new_scene(void);
+t_scene					*get_scene(void);
+void					delete_scene(t_scene *s);
 
 /*
-**
+** Check
 */
-void		check_scene(void);
-void		check_camera(void);
-void		check_lights(void);
-void		check_planes(void);
-void		check_spheres(void);
-void		check_cones(void);
-void		check_cylinders(void);
+void					check_scene(void);
+void					check_camera(void);
+void					check_lights(void);
+void					check_planes(void);
+void					check_spheres(void);
+void					check_cones(void);
+void					check_cylinders(void);
 
 #endif

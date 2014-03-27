@@ -6,7 +6,7 @@
 /*   By: sboeuf <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/16 19:17:52 by sboeuf            #+#    #+#             */
-/*   Updated: 2014/02/16 19:41:26 by sboeuf           ###   ########.fr       */
+/*   Updated: 2014/03/27 19:01:15 by sboeuf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ double	get_x_point(int x)
 	double	rslt;
 
 	if (WD > HI)
-		rslt = ((x + 0.5) / WD) * ASPR - (((WD - HI) / (double) HI) / 2);
+		rslt = ((x + 0.5) / WD) * ASPR - (((WD - HI) / (double)HI) / 2);
 	else
-		rslt = (x + 0.5) / (double) WD;
+		rslt = (x + 0.5) / (double)WD;
 	return (rslt);
 }
 
@@ -28,7 +28,7 @@ double	get_y_point(int y)
 	double	rslt;
 
 	if (HI > WD)
-		rslt = ((y + 0.5) / HI) / ASPR - (((HI - WD) / (double) WD) / 2);
+		rslt = ((y + 0.5) / HI) / ASPR - (((HI - WD) / (double)WD) / 2);
 	else
 		rslt = (y + 0.5) / HI;
 	return (rslt);

@@ -6,7 +6,7 @@
 /*   By: sboeuf <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/16 19:21:19 by sboeuf            #+#    #+#             */
-/*   Updated: 2014/02/16 19:50:35 by sboeuf           ###   ########.fr       */
+/*   Updated: 2014/03/27 19:27:48 by sboeuf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ t_vect	*get_vector(int fd)
 	char	*line;
 
 	if (get_next_line(fd, &line) < 1)
-			exit(-1);
+		exit(-1);
 	x = ft_atodouble(&line);
 	y = ft_atodouble(&line);
 	z = ft_atodouble(&line);

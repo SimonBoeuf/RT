@@ -32,7 +32,7 @@ t_vect	*negative(t_vect *v1)
 	return (v2);
 }
 
-t_vect	*crossProduct(t_vect *v1, t_vect *v2)
+t_vect	*cross_product(t_vect *v1, t_vect *v2)
 {
 	t_vect	*rslt;
 

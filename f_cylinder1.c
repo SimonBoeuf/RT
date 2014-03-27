@@ -6,7 +6,7 @@
 /*   By: sboeuf <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/16 19:18:00 by sboeuf            #+#    #+#             */
-/*   Updated: 2014/03/27 16:10:51 by wtrembla         ###   ########.fr       */
+/*   Updated: 2014/03/27 19:06:19 by sboeuf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,10 +119,7 @@ t_cylinder	*get_cylinder(int fd)
 		if (!ft_strcmp("color:", line))
 			c->color = get_color(fd);
 		if (!ft_strcmp("axis:", line))
-		{
-			c->axis = get_vector(fd);
-			c->axis = normalize(c->axis);
-		}
+			c->axis = normalize(get_vector(fd));
 	}
 	if (r == -1)
 		exit(-1);

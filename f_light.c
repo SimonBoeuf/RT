@@ -6,7 +6,7 @@
 /*   By: sboeuf <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/16 19:18:02 by sboeuf            #+#    #+#             */
-/*   Updated: 2014/02/16 19:18:03 by sboeuf           ###   ########.fr       */
+/*   Updated: 2014/03/27 19:29:30 by sboeuf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_light	*get_spots(int fd)
 		}
 	}
 	if (r == -1)
-			exit (-1);
+		exit(-1);
 	return (l);
 }
 
@@ -49,6 +49,6 @@ t_light	*get_spot(int fd)
 			color = get_color(fd);
 	}
 	if (r == -1)
-			exit(-1);
+		exit(-1);
 	return (new_light(pos, color));
 }

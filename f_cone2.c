@@ -6,7 +6,7 @@
 /*   By: wtrembla <wtrembla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/26 21:56:59 by wtrembla          #+#    #+#             */
-/*   Updated: 2014/03/27 18:23:06 by wtrembla         ###   ########.fr       */
+/*   Updated: 2014/03/27 19:34:18 by sboeuf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,19 +55,20 @@ t_vect				*coeff_cone(t_cone *cone, t_ray *ray)
 	t_vect	*abc;
 	t_vect	*x;
 	t_vect	*y;
+
 	dot1 = dot_product(ray->direction, cone->axis);
 	dot2 = define_dot2(cone, ray);
 	x = define_x_vect(cone, ray);
 	y = define_y_vect(cone, ray);
 	abc = new_vector(cone->cos2 * dot_product(x, x) - cone->sin2 * pow(dot1, 2),
-					 cone->cos2 * dot_product(x, y) - cone->sin2 * dot1 * dot2,
-					 cone->cos2 * dot_product(y, y) - cone->sin2 * pow(dot2, 2));
+					cone->cos2 * dot_product(x, y) - cone->sin2 * dot1 * dot2,
+					cone->cos2 * dot_product(y, y) - cone->sin2 * pow(dot2, 2));
 	return (abc);
 }
 
 int					check_finite_co(t_cone *co, t_vect *point)
 {
-	t_vect 		*sub1;
+	t_vect		*sub1;
 	t_vect		*sub2;
 
 	sub1 = vect_sub(co->lower, point);
@@ -80,5 +81,5 @@ int					check_finite_co(t_cone *co, t_vect *point)
 	}
 	delete_vect(sub1);
 	delete_vect(sub2);
-	return(0);
+	return (0);
 }

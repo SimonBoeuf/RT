@@ -6,7 +6,7 @@
 /*   By: wtrembla <wtrembla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/26 21:48:06 by wtrembla          #+#    #+#             */
-/*   Updated: 2014/03/27 18:21:08 by wtrembla         ###   ########.fr       */
+/*   Updated: 2014/03/27 19:32:44 by sboeuf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ t_vect		*get_normal_at_cone(t_cone *c, t_vect *point)
 	tmp2 = vect_project(tmp1, c->axis);
 	tmp3 = vect_sub(tmp2, tmp1);
 	if (dot_product(tmp1, c->axis) < 0)
-		tmp4 = crossProduct(tmp3, c->axis);
+		tmp4 = cross_product(tmp3, c->axis);
 	else
-		tmp4 = crossProduct(c->axis, tmp3);
-	v = crossProduct(tmp4, tmp1);
+		tmp4 = cross_product(c->axis, tmp3);
+	v = cross_product(tmp4, tmp1);
 	v = normalize(v);
 	delete_vect(tmp1);
 	delete_vect(tmp2);
@@ -130,14 +130,8 @@ t_cone		*get_cone(int fd)
 		if (!ft_strcmp("color:", line))
 			c->color = get_color(fd);
 		if (!ft_strcmp("axis:", line))
-		{
-			c->axis = get_vector(fd);
-			c->axis = normalize(c->axis);
-		}
+			c->axis = normalize(get_vector(fd));
 	}
-	calc_sin2(c);
-	calc_cos2(c);
-	if (r == -1)
-		exit(-1);
+	calc_trigo(c);
 	return (c);
 }

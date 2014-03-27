@@ -6,7 +6,7 @@
 /*   By: sboeuf <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/16 19:21:07 by sboeuf            #+#    #+#             */
-/*   Updated: 2014/03/27 17:05:24 by wtrembla         ###   ########.fr       */
+/*   Updated: 2014/03/27 19:25:19 by sboeuf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@ void	rtv1(char *scene_file)
 	display_scene();
 }
 
-#include <stdio.h>
-
 void	init_scene(char *scene_file)
 {
 	int		fd;
@@ -47,7 +45,7 @@ void	init_scene(char *scene_file)
 	while ((ret = get_next_line(fd, &line)) > 0)
 	{
 		if (!ft_strcmp("camera:", line))
-				s->cam = get_camera(fd);
+			s->cam = get_camera(fd);
 		if (!ft_strcmp("spheres:", line))
 			s->spheres = get_spheres(fd);
 		if (!ft_strcmp("planes:", line))
@@ -60,7 +58,7 @@ void	init_scene(char *scene_file)
 			s->cones = get_cones(fd);
 	}
 	if (ret == -1)
-			exit(-1);
+		exit(-1);
 }
 
 void	check_scene(void)

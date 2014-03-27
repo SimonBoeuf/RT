@@ -6,7 +6,7 @@
 /*   By: sboeuf <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/16 19:17:55 by sboeuf            #+#    #+#             */
-/*   Updated: 2014/02/16 22:06:48 by sboeuf           ###   ########.fr       */
+/*   Updated: 2014/03/27 19:01:38 by sboeuf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_color	*color_scalar(double scalar, t_color *c1)
 	t_color	*c2;
 
 	c2 = new_color(c1->red * scalar, c1->green * scalar,
-		c1->blue *scalar, c1->spec);
+		c1->blue * scalar, c1->spec);
 	return (c2);
 }
 

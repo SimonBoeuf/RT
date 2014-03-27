@@ -6,7 +6,7 @@
 /*   By: sboeuf <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/16 19:17:47 by sboeuf            #+#    #+#             */
-/*   Updated: 2014/03/27 18:23:10 by wtrembla         ###   ########.fr       */
+/*   Updated: 2014/03/27 19:33:27 by sboeuf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,9 @@ t_cone		*new_cone(t_vect *center, double alpha, t_color *col, t_vect *axis)
 	return (c);
 }
 
-void		calc_sin2(t_cone *c)
+void		calc_trigo(t_cone *c)
 {
 	c->sin2 = pow(sin(c->alpha), 2);
-}
-
-void		calc_cos2(t_cone *c)
-{
 	c->cos2 = pow(cos(c->alpha), 2);
 }
 

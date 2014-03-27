@@ -6,7 +6,7 @@
 /*   By: sboeuf <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/16 19:21:11 by sboeuf            #+#    #+#             */
-/*   Updated: 2014/03/26 22:10:46 by wtrembla         ###   ########.fr       */
+/*   Updated: 2014/03/27 19:25:26 by sboeuf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ t_scene	*get_scene(void)
 	static t_scene	*s = NULL;
 
 	if (s == NULL)
-			s = new_scene();
+		s = new_scene();
 	return (s);
 }
 

@@ -6,7 +6,7 @@
 /*   By: sboeuf <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/16 19:17:38 by sboeuf            #+#    #+#             */
-/*   Updated: 2014/02/16 19:17:41 by sboeuf           ###   ########.fr       */
+/*   Updated: 2014/03/27 18:56:38 by sboeuf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,17 +45,17 @@ t_camera	*get_camera(int fd)
 	while ((r = get_next_line(fd, &line)) > 0 && ft_strcmp(line, "----------"))
 	{
 		if (!ft_strcmp("pos:", line))
-				c->campos = get_vector(fd);
+			c->campos = get_vector(fd);
 		if (!ft_strcmp("dir:", line))
-				look_at = get_vector(fd);
+			look_at = get_vector(fd);
 	}
 	if (r == -1)
-			exit(-1);
+		exit(-1);
 	diff_btw = new_vector(c->campos->x - look_at->x,
 							c->campos->y - look_at->y,
 							c->campos->z - look_at->z);
 	c->camdir = normalize(negative(diff_btw));
-	c->camright = normalize(crossProduct(new_vector(0, 1, 0), c->camdir));
-	c->camdown = crossProduct(c->camright, c->camdir);
+	c->camright = normalize(cross_product(new_vector(0, 1, 0), c->camdir));
+	c->camdown = cross_product(c->camright, c->camdir);
 	return (c);
 }

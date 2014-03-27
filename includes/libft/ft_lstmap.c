@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sboeuf <sboeuf@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sboeuf <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2013/11/25 13:26:22 by sboeuf           #+#    #+#             */
-/*   Updated: 2013/11/30 18:22:43 by sboeuf          ###   ########.fr       */
+/*   Created: 2014/03/27 19:11:08 by sboeuf            #+#    #+#             */
+/*   Updated: 2014/03/27 19:35:31 by sboeuf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_list	*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem))
 	lst_new = lst;
 	temp = (*f)(lst_new);
 	if ((ret_new = ft_lstnew(temp->content, temp->content_size)) == NULL)
-			return (NULL);
+		return (NULL);
 	ret = ret_new;
 	lst_new = lst_new->next;
 	while (lst_new != NULL)

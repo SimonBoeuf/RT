@@ -6,7 +6,7 @@
 /*   By: wtrembla <wtrembla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/26 19:51:55 by wtrembla          #+#    #+#             */
-/*   Updated: 2014/03/26 21:10:39 by wtrembla         ###   ########.fr       */
+/*   Updated: 2014/03/27 19:27:34 by sboeuf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,6 @@ t_vect		*vect_project(t_vect *v1, t_vect *v2)
 	dot1 = dot_product(v1, v2);
 	dot2 = dot_product(v2, v2);
 	project = new_vector(v2->x * dot1 / dot2, v2->y * dot1 / dot2,
-						 v2->z * dot1 / dot2);
+							v2->z * dot1 / dot2);
 	return (project);
 }

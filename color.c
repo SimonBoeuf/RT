@@ -6,7 +6,7 @@
 /*   By: sboeuf <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/01/30 17:58:47 by sboeuf            #+#    #+#             */
-/*   Updated: 2014/03/26 19:41:20 by sboeuf           ###   ########.fr       */
+/*   Updated: 2014/03/27 19:00:04 by sboeuf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ t_color	*get_color(int fd)
 	char	*line;
 
 	if (get_next_line(fd, &line) < 1)
-			exit(-1);
+		exit(-1);
 	r = ft_atodouble(&line);
 	g = ft_atodouble(&line);
 	b = ft_atodouble(&line);
@@ -61,10 +61,4 @@ int		get_color_number(t_color *c)
 	rslt = rslt << 8;
 	rslt += c->blue * 255;
 	return (rslt);
-}
-
-t_color	*get_color_from_number(int red, int green, int blue)
-{
-	return (new_color((float)red / 255, (float)green / 255,
-				(float)blue / 255, 3.9));
 }

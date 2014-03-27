@@ -6,7 +6,7 @@
 /*   By: sboeuf <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/16 19:20:54 by sboeuf            #+#    #+#             */
-/*   Updated: 2014/03/26 16:33:41 by sboeuf           ###   ########.fr       */
+/*   Updated: 2014/03/27 19:24:09 by sboeuf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,11 @@ t_plane	*new_plane(t_vect *normal, double distance, t_color *c)
 void	add_plane(t_plane *start, t_plane *new)
 {
 	if (start == NULL)
-			start = new;
+		start = new;
 	else
 	{
 		while (start->next != NULL)
-				start = start->next;
+			start = start->next;
 		start->next = new;
 	}
 }

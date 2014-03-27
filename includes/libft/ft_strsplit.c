@@ -3,35 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strsplit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sboeuf <sboeuf@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sboeuf <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2013/11/21 17:19:58 by sboeuf           #+#    #+#             */
-/*   Updated: 2013/11/26 18:41:54 by sboeuf          ###   ########.fr       */
+/*   Created: 2014/03/27 19:13:51 by sboeuf            #+#    #+#             */
+/*   Updated: 2014/03/27 19:15:13 by sboeuf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
-static int		ft_copy_str(char const *s, char c, size_t size_array,
-				char **ret);
-static size_t	ft_get_size_array(char const *s, char c);
-
-char			**ft_strsplit(char const *s, char c)
-{
-	char		**ret;
-	size_t		size_array;
-
-	if (s == NULL)
-		return (NULL);
-	size_array = ft_get_size_array(s, c);
-	ret = (char **)malloc(sizeof(*ret) * (size_array + 1));
-	if (ret == NULL)
-		return (NULL);
-	if (ft_copy_str(s, c, size_array, ret))
-		return (NULL);
-	ret[size_array] = '\0';
-	return (ret);
-}
 
 static int		ft_copy_str(char const *s, char c, size_t size_array,
 				char **ret)
@@ -72,4 +51,21 @@ static size_t	ft_get_size_array(char const *s, char c)
 		temp_s++;
 	}
 	return (size_array);
+}
+
+char			**ft_strsplit(char const *s, char c)
+{
+	char		**ret;
+	size_t		size_array;
+
+	if (s == NULL)
+		return (NULL);
+	size_array = ft_get_size_array(s, c);
+	ret = (char **)malloc(sizeof(*ret) * (size_array + 1));
+	if (ret == NULL)
+		return (NULL);
+	if (ft_copy_str(s, c, size_array, ret))
+		return (NULL);
+	ret[size_array] = '\0';
+	return (ret);
 }

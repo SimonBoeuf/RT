@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check1.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sboeuf <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2014/03/27 18:56:44 by sboeuf            #+#    #+#             */
+/*   Updated: 2014/03/27 18:57:44 by sboeuf           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "includes/rtv1.h"
 
 void	check_camera(void)
@@ -18,7 +30,7 @@ void	check_lights(void)
 	t_light		*l;
 
 	l = get_scene()->lights;
-	while(l != NULL)
+	while (l != NULL)
 	{
 		if (l->position == NULL || l->c == NULL)
 		{
@@ -68,8 +80,8 @@ void	check_cones(void)
 	c = get_scene()->cones;
 	while (c != NULL)
 	{
-		if (c->center == NULL || c->axis == NULL || c->color == NULL
-		)
+		if (c->center == NULL || c->axis == NULL || c->color == NULL ||
+				c->upper == NULL || c->lower == NULL)
 		{
 			ft_putendl("Invalid cone");
 			exit(-1);
