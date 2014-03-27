@@ -6,7 +6,7 @@
 /*   By: sboeuf <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/16 19:21:07 by sboeuf            #+#    #+#             */
-/*   Updated: 2014/03/26 15:56:38 by sboeuf           ###   ########.fr       */
+/*   Updated: 2014/03/27 17:05:24 by wtrembla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ void	rtv1(char *scene_file)
 	check_scene();
 	display_scene();
 }
+
+#include <stdio.h>
 
 void	init_scene(char *scene_file)
 {

@@ -6,7 +6,7 @@
 /*   By: wtrembla <wtrembla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/26 20:49:21 by wtrembla          #+#    #+#             */
-/*   Updated: 2014/03/26 21:30:22 by wtrembla         ###   ########.fr       */
+/*   Updated: 2014/03/27 16:15:44 by wtrembla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,22 @@ t_vect			*coeff_cylinder(t_cylinder *cylinder, t_ray *ray)
 	delete_vect(x);
 	delete_vect(y);
 	return (abc);
+}
+
+int				check_finite_cyl(t_cylinder *cy, t_vect *point)
+{
+	t_vect 		*sub1;
+	t_vect		*sub2;
+
+	sub1 = vect_sub(cy->center, point);
+	sub2 = vect_sub(cy->upper, point);
+	if (dot_product(sub1, cy->axis) > 0 && dot_product(sub2, cy->axis) < 0)
+	{
+		delete_vect(sub1);
+		delete_vect(sub2);
+		return (1);
+	}
+	delete_vect(sub1);
+	delete_vect(sub2);
+	return(0);
 }

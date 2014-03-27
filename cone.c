@@ -6,7 +6,7 @@
 /*   By: sboeuf <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/16 19:17:47 by sboeuf            #+#    #+#             */
-/*   Updated: 2014/03/26 22:19:39 by wtrembla         ###   ########.fr       */
+/*   Updated: 2014/03/27 18:23:10 by wtrembla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,21 @@ t_cone		*new_cone(t_vect *center, double alpha, t_color *col, t_vect *axis)
 	c->alpha = alpha;
 	c->axis = axis;
 	c->color = col;
+	c->upper = NULL;
+	c->lower = NULL;
 	c->cos2 = pow(cos(alpha), 2);
 	c->sin2 = pow(sin(alpha), 2);
 	return (c);
+}
+
+void		calc_sin2(t_cone *c)
+{
+	c->sin2 = pow(sin(c->alpha), 2);
+}
+
+void		calc_cos2(t_cone *c)
+{
+	c->cos2 = pow(cos(c->alpha), 2);
 }
 
 void		add_cone(t_cone *start, t_cone *new)

@@ -6,7 +6,7 @@
 /*   By: sboeuf <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/16 19:18:00 by sboeuf            #+#    #+#             */
-/*   Updated: 2014/03/26 21:44:13 by wtrembla         ###   ########.fr       */
+/*   Updated: 2014/03/27 16:10:51 by wtrembla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ double		find_cylinder_intersection(t_cylinder *cy, t_ray *r)
 	t_vect		*abc;
 	double		d;
 	double		rslt;
+	t_vect		*point;
 
 	abc = coeff_cylinder(cy, r);
 	d = pow(abc->y, 2) - abc->x * abc->z;
@@ -65,6 +66,9 @@ double		find_cylinder_intersection(t_cylinder *cy, t_ray *r)
 		rslt = ((-abc->y - sqrt(d)) / abc->x) - 0.000001 > 0 ?
 			(-abc->y - sqrt(d)) / abc->x - 0.000001 :
 			(-abc->y + sqrt(d)) / abc->x - 0.000001;
+		point = vect_add(r->origin, vect_mult(r->direction, rslt));
+		if (!check_finite_cyl(cy, point))
+			rslt = -1;
 	}
 	else
 		rslt = -1;
@@ -103,8 +107,10 @@ t_cylinder	*get_cylinder(int fd)
 	c = new_cylinder(NULL, 0, NULL, NULL);
 	while ((r = get_next_line(fd, &line)) > 0 && ft_strcmp(line, "----------"))
 	{
-		if (!ft_strcmp("pos:", line))
+		if (!ft_strcmp("p1:", line))
 			c->center = get_vector(fd);
+		if (!ft_strcmp("p2:", line))
+			c->upper = get_vector(fd);
 		if (!ft_strcmp("radius:", line))
 		{
 			r = get_next_line(fd, &line);
@@ -120,5 +126,5 @@ t_cylinder	*get_cylinder(int fd)
 	}
 	if (r == -1)
 		exit(-1);
-		return (c);
+	return (c);
 }

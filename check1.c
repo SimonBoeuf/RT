@@ -68,7 +68,8 @@ void	check_cones(void)
 	c = get_scene()->cones;
 	while (c != NULL)
 	{
-		if (c->center == NULL || c->axis == NULL || c->color == NULL)
+		if (c->center == NULL || c->axis == NULL || c->color == NULL
+		)
 		{
 			ft_putendl("Invalid cone");
 			exit(-1);

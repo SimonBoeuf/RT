@@ -6,7 +6,7 @@
 /*   By: sboeuf <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/01/30 17:38:11 by sboeuf            #+#    #+#             */
-/*   Updated: 2014/03/26 22:35:34 by wtrembla         ###   ########.fr       */
+/*   Updated: 2014/03/27 18:23:13 by wtrembla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,7 @@ typedef struct			s_sphere
 typedef struct			s_cylinder
 {
 	t_vect				*center;
+	t_vect				*upper;
 	double				radius;
 	t_color				*color;
 	t_vect				*axis;
@@ -138,6 +139,8 @@ typedef struct			s_cone
 	t_vect				*center;
 	double				alpha;
 	t_vect				*axis;
+	t_vect				*lower;
+	t_vect				*upper;
 	t_color				*color;
 	double				cos2;
 	double				sin2;
@@ -305,6 +308,7 @@ void		add_cylinder(t_cylinder *start, t_cylinder *new);
 void		delete_cylinders(t_cylinder **s);
 
 t_vect		*coeff_cylinder(t_cylinder *cylinder, t_ray *ray);
+int			check_finite_cyl(t_cylinder *cy, t_vect *point);
 t_inter		*find_cylinders_intersection(t_ray *r);
 double		find_cylinder_intersection(t_cylinder *c, t_ray *r);
 t_vect		*get_normal_at_cylinder(t_cylinder *c, t_vect *point);
@@ -317,8 +321,11 @@ t_cylinder	*get_cylinder(int fd);
 t_cone		*new_cone(t_vect *center, double alpha, t_color *col, t_vect *axis);
 void		add_cone(t_cone *start, t_cone *new);
 void		delete_cones(t_cone **s);
+void		calc_sin2(t_cone *c);
+void		calc_cos2(t_cone *c);
 
 t_vect		*coeff_cone(t_cone *cone, t_ray *ray);
+int			check_finite_co(t_cone *co, t_vect *point);
 t_inter		*find_cones_intersection(t_ray *ray);
 double		find_cone_intersection(t_cone *c, t_ray *r);
 t_vect		*get_normal_at_cone(t_cone *c, t_vect *point);

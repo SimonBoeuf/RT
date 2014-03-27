@@ -8,7 +8,8 @@ void	check_cylinders(void)
 
 	while (c != NULL)
 	{
-		if (c->center == NULL || c->color == NULL || c->axis == NULL)
+		if (c->center == NULL || c->color == NULL || c->axis == NULL
+			|| c->upper == NULL)
 		{
 			ft_putendl("Invalid cylinder");
 			exit(-1);
