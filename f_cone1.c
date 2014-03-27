@@ -6,7 +6,7 @@
 /*   By: wtrembla <wtrembla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/03/26 21:48:06 by wtrembla          #+#    #+#             */
-/*   Updated: 2014/03/26 22:28:33 by wtrembla         ###   ########.fr       */
+/*   Updated: 2014/03/27 18:21:08 by wtrembla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ double		find_cone_intersection(t_cone *c, t_ray *r)
 	t_vect		*abc;
 	double		d;
 	double		rslt;
+	t_vect		*point;
 
 	abc = coeff_cone(c, r);
 	d = pow(abc->y, 2) - abc->x * abc->z;
@@ -74,6 +75,9 @@ double		find_cone_intersection(t_cone *c, t_ray *r)
 		rslt = ((-abc->y - sqrt(d)) / abc->x) - 0.000001 > 0 ?
 			(-abc->y - sqrt(d)) / abc->x - 0.000001 :
 			(-abc->y + sqrt(d)) / abc->x - 0.000001;
+		point = vect_add(r->origin, vect_mult(r->direction, rslt));
+		if (!check_finite_co(c, point))
+			rslt = -1;
 	}
 	else
 		rslt = -1;
@@ -107,29 +111,33 @@ t_cone		*get_cone(int fd)
 {
 	int			r;
 	char		*line;
-	t_vect		*center;
-	t_vect		*axis;
-	double		angle;
-	t_color		*color;
+	t_cone		*c;
 
+	c = new_cone(NULL, 0, NULL, NULL);
 	while ((r = get_next_line(fd, &line)) > 0 && ft_strcmp(line, "----------"))
 	{
 		if (!ft_strcmp("pos:", line))
-			center = get_vector(fd);
+			c->center = get_vector(fd);
+		if (!ft_strcmp("upper:", line))
+			c->upper = get_vector(fd);
+		if (!ft_strcmp("lower:", line))
+			c->lower = get_vector(fd);
 		if (!ft_strcmp("angle:", line))
 		{
 			r = get_next_line(fd, &line);
-			angle = ft_atodouble(&line) * M_PI / 180;
+			c->alpha = ft_atodouble(&line) * M_PI / 180;
 		}
 		if (!ft_strcmp("color:", line))
-			color = get_color(fd);
+			c->color = get_color(fd);
 		if (!ft_strcmp("axis:", line))
 		{
-			axis = get_vector(fd);
-			axis = normalize(axis);
+			c->axis = get_vector(fd);
+			c->axis = normalize(c->axis);
 		}
 	}
+	calc_sin2(c);
+	calc_cos2(c);
 	if (r == -1)
 		exit(-1);
-	return (new_cone(center, angle, color, axis));
+	return (c);
 }
